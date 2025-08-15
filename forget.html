@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('login.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+            width: 500px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .icon-lock {
+            width: 100px;
+        }
+
+        .form-container {
+            width: 300px;
+        }
+
+        .form-container input[type="email"], 
+        .form-container input[type="password"], 
+        .form-container input[type="text"] {
+            width: 100%; /* Full width without adjustments */
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #b3d9d9;
+            font-size: 16px;
+            background-color: #a7d5d5;
+            color: black;
+            position: relative; /* Make positioning relative for icons */
+            appearance: none; /* Ensures consistency across browsers */
+        }
+
+        .form-container button {
+            background-color: #7dc7c7;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .form-container button:hover {
+            background-color: #66aaaa;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: black; /* Change eye icon color to black */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left side lock icon -->
+        <img src="lock.png" alt="Lock Icon" class="icon-lock">
+        
+        <!-- Form container -->
+        <div class="form-container">
+            <form action="forget.php" method="post">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+                <label for="new-password">New Password</label>
+                <div style="position: relative;">
+                    <input type="password" id="new-password" name="new-password" placeholder="Enter new password" required>
+                    <i id="eye-icon-new-password" class="fa fa-eye eye-icon" onclick="togglePasswordVisibility('new-password')"></i>
+                </div>
+
+                <label for="confirm-password">Confirm Password</label>
+                <div style="position: relative;">
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm new password" required>
+                    <i id="eye-icon-confirm-password" class="fa fa-eye eye-icon" onclick="togglePasswordVisibility('confirm-password')"></i>
+                </div>
+
+                <button type="submit">Change</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function togglePasswordVisibility(id) {
+            const passwordField = document.getElementById(id);
+            const eyeIcon = document.getElementById(`eye-icon-${id}`);
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+            eyeIcon.className = type === 'password' ? 'fa fa-eye-slash eye-icon' : 'fa fa-eye eye-icon';
+        }
+    </script>
+</body>
+</html>

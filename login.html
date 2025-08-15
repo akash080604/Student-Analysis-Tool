@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column; /* Stack sidebar and main content vertically */
+            height: 100vh;
+        }
+
+        .rightside {
+            flex: 1; /* Fill remaining space */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('login.jpg') no-repeat center center; /* Add your background image */
+            background-size: cover; /* Cover the entire area */
+            padding: 20px;
+        }
+
+        .simplebox {
+            width: 100%;
+            max-width: 400px;
+            background-color: rgba(255, 255, 255, 0); /* White background with some transparency */
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            backdrop-filter: blur(10px); /* Apply blur effect */
+        }
+
+        .loginimg {
+            width: 40%; /* Full width for responsiveness */
+            height: auto;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .text1 {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .text2 {
+            text-decoration: none;
+            color: black;
+            position: relative;
+            left: 143px;
+        }
+
+        .boxsize {
+            height: 40px;
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            outline: none;
+            color: black;
+            transition: border-color 0.3s;
+        }
+
+        .boxsize:focus {
+            border-color: #22988A;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .eye-icon {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #333;
+        }
+
+        .boxsize2 {
+            height: 40px;
+            background-color: #3377a4;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .boxsize2:hover {
+            background-color: #00695c;
+        }
+
+        .text3 {
+            font-size: 14px;
+            text-align: center;
+            margin-top: 15px;
+            color: #00695c;
+        }
+
+        .captcha-display {
+            font-size: 20px;
+            font-weight: bold;
+            background-color: rgb(0, 0, 0);
+            color: white;
+            margin-bottom: 10px;
+            padding: 10px;
+            display: inline-block;
+            border-radius: 5px;
+            text-align: center;
+            width: 95%;
+            height: 20px;
+        }
+
+        .reload-captcha {
+            background-color: #3377a4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background-color 0.3s ease;
+            position: relative;
+            left: 142px;
+        }
+
+        .reload-captcha:hover {
+            background-color: #00695c;
+            color: white;
+        }
+    </style>
+    <script>
+        let captchaCode = "";
+
+        function generateCaptcha() {
+            const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            let captcha = "";
+            for (let i = 0; i < 6; i++) {
+                captcha += characters.charAt(Math.floor(Math.random() * characters.length));
+            }
+            captchaCode = captcha;
+            document.getElementById("captcha-display").textContent = captcha; // Display the captcha
+            
+            // Store captcha in the session using AJAX
+            storeCaptcha(captcha);
+        }
+
+        function storeCaptcha(captcha) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", "store_captcha.php", true);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            xhr.send("captcha=" + encodeURIComponent(captcha));
+        }
+
+        function preventCopy(event) {
+            event.preventDefault();
+            alert("Copying the captcha is not allowed!");
+        }
+
+        function togglePasswordVisibility(id) {
+            const passwordField = document.getElementById(id);
+            const eyeIcon = document.getElementById(`eye-icon-${id}`);
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+            eyeIcon.className = type === 'password' ? 'fa fa-eye-slash eye-icon' : 'fa fa-eye eye-icon';
+        }
+
+        function validateCaptcha(event) {
+            const userCaptcha = document.getElementById("captcha").value;
+            if (userCaptcha !== captchaCode) {
+                event.preventDefault(); // Prevent form submission
+                alert("Captcha does not match. Please try again.");
+                generateCaptcha(); // Regenerate captcha
+            }
+        }
+
+        window.onload = function() {
+            generateCaptcha();
+            document.getElementById("captcha-display").addEventListener("copy", preventCopy);
+        };
+    </script>
+</head>
+<body>
+    <div class="rightside">
+        <div class="simplebox">
+            <img src="login.png" class="loginimg" alt="Login">
+            <div class="content">
+                <form action="login.php" method="POST" onsubmit="validateCaptcha(event)"> 
+                    <label class="text1" for="email">Email</label>
+                    <input class="boxsize" type="text" id="email" name="email" placeholder="Enter your email" required>
+
+                    <label class="text1" for="password">Password</label>
+                    <div class="password-container">
+                        <input class="boxsize" type="password" id="password" name="password" required>
+                        <i class="fa fa-eye-slash eye-icon" id="eye-icon-password" onclick="togglePasswordVisibility('password')"></i>
+                    </div>
+                    <a class="text2" href="forget.html">Forget Password?</a>
+
+                    <div class="captcha-display" id="captcha-display"></div>
+                    <button type="button" class="reload-captcha" onclick="generateCaptcha()">Reload Captcha</button>
+                    <input class="boxsize" type="text" id="captcha" name="captcha" required placeholder="Enter captcha">
+
+                    <button type="submit" class="boxsize2">Login</button>
+                    <a class="text2" href="newuser.html">Create an account?</a>
+                </form>
+            <a style="position: absolute;left: 36%;" href="main.html" class="back-to-home">Back to Home Page</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

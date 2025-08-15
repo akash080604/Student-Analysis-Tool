@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>New User</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('login.jpg') no-repeat center center;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 50px;
+            border-radius: 5px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            max-width: 90%;
+        }
+
+        .form-box {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            text-align: center;
+        }
+
+        .form-inputs {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            text-align: left;
+            color: #3377a4;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .password-input {
+            position: relative;
+            width: 100%;
+        }
+
+        input {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            outline: none;
+            width: calc(100% - 20px);
+            background-color: #9bc7c4;
+            margin-bottom: 15px;
+        }
+
+        input:focus {
+            border-color: #3377a4;
+        }
+
+        .eye-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .login-btn {
+            border: none;
+            background-color: #9bc7c4;
+            color: #3377a4;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            background-color: #00695c;
+            color: #3377a4;
+        }
+
+        .imgsize {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #00695c;
+        }
+    </style>
+    <script>
+        function validateForm(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (!email.includes('@')) {
+                alert('Error: Email must contain "@" symbol.');
+                return;
+            }
+
+            if (password !== confirmPassword) {
+                alert('Error: Password and Confirm Password must match.');
+                return;
+            }
+
+            document.querySelector('form').submit();
+        }
+
+        function togglePasswordVisibility(id) {
+            const passwordField = document.getElementById(id);
+            const eyeIcon = document.getElementById(`eye-icon-${id}`);
+            const type = passwordField.type === 'password' ? 'text' : 'password';
+            passwordField.type = type;
+            eyeIcon.className = type === 'password' ? 'fa fa-eye-slash eye-icon' : 'fa fa-eye eye-icon';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <form action="insertdata.php" method="post" class="form-box" onsubmit="validateForm(event)">
+            <h1>New User</h1>
+            <div class="imgsize">
+                <img src="add-user.png" alt="user icon" class="imgsize">
+            </div>
+            <div class="form-inputs">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <div class="password-input">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                    <i id="eye-icon-password" class="eye-icon fa fa-eye-slash" onclick="togglePasswordVisibility('password')"></i>
+                </div>
+
+                <div class="password-input">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                    <i id="eye-icon-confirm" class="eye-icon fa fa-eye-slash" onclick="togglePasswordVisibility('confirm-password')"></i>
+                </div>
+            </div>
+            <button type="submit" class="login-btn">Register</button>
+        </form>
+    </div>
+</body>
+</html>

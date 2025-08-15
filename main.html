@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Analysis Tool</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        
+        header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    backdrop-filter: blur(10px); /* Optional: Add a blur effect for readability */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.075);
+    background-color: rgba(94, 103, 104, 0.8); /* Translucent background color */
+    color: white;
+}
+
+
+
+        .logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px; /* Make the logo smaller */
+            height: auto;
+        }
+
+        .logo h1 {
+            font-size: 18px; /* Adjust size as needed */
+            margin-top: 5px; /* Space between logo and text */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-image: url('main.jpg'); /* Set main.jpg as background */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            height: 700px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        /* Main content box */
+        .login-box {
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 600px; /* Full width of viewport */
+             /* Limit the max width */
+            backdrop-filter: blur(10px); /* Optional: Add a blur effect for readability */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* Optional: Add shadow for depth */
+        }
+
+        .login-box h2 {
+            margin-bottom: 20px;
+            color: white; /* Change text color for visibility */
+        }
+
+        .login-box p {
+            color: white; /* Change text color for visibility */
+            margin-bottom: 20px; /* Space between description and buttons */
+        }
+
+        .login-box button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .login-box button:hover {
+            background-color: #218838;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            backdrop-filter: blur(10px); /* Optional: Add a blur effect for readability */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            color: white;
+            margin: 0px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+      
+    </style>
+</head>
+<body>
+    <!-- Header section with logo and title -->
+    <header>
+        <div class="logo">
+            <img src="assessment.png" alt="Student Analysis Tool Logo" />
+            <h1>Student Analysis Tool</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="contact_us.html">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section with Login Box -->
+    <section class="hero">
+        <div class="login-box">
+            <h2>Welcome to Student Analysis Tool</h2>
+            <p>The Student Analysis Tool is designed to help educators and administrators efficiently analyze student performance, track progress, and improve educational outcomes. With user-friendly features, this tool provides insights that support data-driven decision-making.</p>
+            <a href="login.html">
+                <button>Student / Parent Login</button>
+            </a>
+            <a href="admin.html">
+                <button>Admin Login</button>
+            </a>
+        </div>
+    </section>
+
+    <!-- Description Section -->
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Student Analysis Tool. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

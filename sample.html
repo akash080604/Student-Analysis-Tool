@@ -1,0 +1,73 @@
+<!doctype html>
+<?php
+if (isset($_POST['login'])) {
+    // Authorisation details.
+    $username = "otpphp@gmail.com";
+    $hash = "3eab60ec988c461f0cfc0e6ed6ed7b0b9bfc0b72e462dfdb2492b447223422d7";
+ 
+    // Config variables. Consult http://api.txtlocal.com/docs for more info.
+    $test = "0";
+    $name = $_POST['name'];
+ 
+    // Data for text message. This is the text message data.
+    $sender = "API Test"; // This is who the message appears to be from.
+    $numbers = $_POST['num']; // A single number or a comma-separated list of numbers
+    $otp = mt_rand(100000, 999999);
+    setcookie("otp", $otp, time() + 300); // Set OTP cookie for 5 minutes
+    $message = "Hey " . $name . ", your OTP is " . $otp;
+
+    // 612 chars or less
+    // A single number or a comma-separated list of numbers
+    $message = urlencode($message);
+    $data = "username=" . $username . "&hash=" . $hash . "&message=" . $message . "&sender=" . $sender . "&numbers=" . $numbers . "&test=" . $test;
+    $ch = curl_init('http://api.txtlocal.com/send/?');
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = curl_exec($ch); // This is the result from the API
+    curl_close($ch);
+    echo "OTP sent successfully";
+}
+
+if (isset($_POST['ver'])) {
+    $verotp = $_POST['otp'];
+    if (isset($_COOKIE['otp']) && $verotp == $_COOKIE['otp']) {
+        echo "Logged in successfully";
+    } else {
+        echo "OTP wrong";
+    }
+}
+?>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>OTP Verification</title>
+</head>
+<body>
+    <form method="post" action="phpotp.php">
+        <table align="center">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="name" placeholder="Enter your Name" required></td>
+            </tr>
+            <tr>
+                <td>Phone Number</td>
+                <td><input type="text" name="num" placeholder="Valid! with country Code" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" name="login" value="Send OTP" style="background-color: #433396; border: 0px;"></td>
+            </tr>
+            <tr>
+                <td>Verify OTP:</td>
+                <td><input type="text" name="otp" placeholder="Enter received OTP" required></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" name="ver" value="Verify OTP" style="background-color: green; border: 0px;"></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
