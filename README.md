@@ -11,6 +11,7 @@ Built with **HTML**, **CSS**, **JavaScript**, and **PHP**, and powered by **XAMP
 - **Database:** MySQL
 - **Local Server:** XAMPP
 - **PDF Generation:** TCPDF
+- **OTP Generator / Email Service:** PHPMailer
 
 ---
 
